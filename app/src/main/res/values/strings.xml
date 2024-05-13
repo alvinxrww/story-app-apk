@@ -14,4 +14,5 @@
     <string name="message_main_page">Selamat Belajar di Dicoding.</string>
     <string name="greeting">Halo %1$s,</string>
     <string name="logout">Keluar</string>
+    <string name="register_image">image asset for registration page</string>
 </resources>
