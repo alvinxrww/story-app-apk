@@ -55,11 +55,11 @@ class SignupActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 try {
                     val apiService = ApiConfig.getApiService()
-                    val response = apiService.register(name, email, password)
+                    apiService.register(name, email, password)
                     binding.progressBar.visibility = View.GONE
                     showAlertDialog(
                         title = "Success",
-                        message = response.message ?: "your account has been created successfully",
+                        message = "your account has been created successfully",
                         success = true
                     )
                 } catch (e: HttpException) {
@@ -140,5 +140,4 @@ class SignupActivity : AppCompatActivity() {
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
-
 }

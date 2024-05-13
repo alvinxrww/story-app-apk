@@ -11,10 +11,16 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstory.data.local.pref.UserModel
+import com.example.dicodingstory.data.remote.api.ApiConfig
+import com.example.dicodingstory.data.remote.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivityLoginBinding
 import com.example.dicodingstory.viewmodel.ViewModelFactory
 import com.example.dicodingstory.viewmodel.LoginViewModel
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -48,18 +54,44 @@ class LoginActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
-            viewModel.saveSession(UserModel(email, "sample_token"))
-            AlertDialog.Builder(this).apply {
-                setTitle("Yeah!")
-                setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
-                setPositiveButton("Lanjut") { _, _ ->
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+            val password = binding.passwordEditText.text.toString()
+
+            binding.progressBar.visibility = View.VISIBLE
+
+            lifecycleScope.launch {
+                try {
+                    val apiService = ApiConfig.getApiService()
+                    val response = apiService.login(email, password)
+                    val token: String? = response.loginResult?.token
+
+                    binding.progressBar.visibility = View.GONE
+
+                    if (token != null) {
+                        showAlertDialog(
+                            title = "Success",
+                            message = "You have logged in successfully",
+                            success = true
+                        )
+                        viewModel.saveSession(UserModel(email, token))
+                    } else {
+                        showAlertDialog(
+                            title = "Failed",
+                            message = "Failed to retrieve token. Please try again.",
+                            success = false
+                        )
+                    }
+                } catch (e: HttpException) {
+                    binding.progressBar.visibility = View.GONE
+
+                    val jsonInString = e.response()?.errorBody()?.string()
+                    val errorBody = Gson().fromJson(jsonInString, RegisterResponse::class.java)
+                    val errorMessage = errorBody.message
+                    showAlertDialog(
+                        title = "Failed",
+                        message = errorMessage.toString(),
+                        success = false
+                    )
                 }
-                create()
-                show()
             }
         }
     }
@@ -96,6 +128,29 @@ class LoginActivity : AppCompatActivity() {
             )
             startDelay = 100
         }.start()
+    }
+
+    private fun showAlertDialog(title: String, message: String, success: Boolean) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle(title)
+            setMessage(message)
+            if (success) {
+                setPositiveButton("Continue") { _, _ ->
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                setNegativeButton("Ok") { _, _ ->
+                    // Handle negative button click if necessary
+                }
+            }
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
 }

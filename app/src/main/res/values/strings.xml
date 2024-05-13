@@ -15,4 +15,5 @@
     <string name="greeting">Halo %1$s,</string>
     <string name="logout">Keluar</string>
     <string name="register_image">image asset for registration page</string>
+    <string name="login_image">Image asset for login page</string>
 </resources>
