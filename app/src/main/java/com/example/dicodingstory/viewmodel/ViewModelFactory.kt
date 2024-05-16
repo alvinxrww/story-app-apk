@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.data.local.UserRepository
-import com.example.dicodingstory.di.Injection
+import com.example.dicodingstory.di.UserInjection
 
 class ViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -20,6 +20,8 @@ class ViewModelFactory(private val repository: UserRepository) :
                 LoginViewModel(repository) as T
             }
 
+            // TODO: tambahin StoryViewModel
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
@@ -32,7 +34,7 @@ class ViewModelFactory(private val repository: UserRepository) :
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideRepository(context))
+                    INSTANCE = ViewModelFactory(UserInjection.provideRepository(context))
                 }
             }
             return INSTANCE as ViewModelFactory

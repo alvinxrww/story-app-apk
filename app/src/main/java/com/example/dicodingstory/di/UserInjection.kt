@@ -5,7 +5,7 @@ import com.example.dicodingstory.data.local.UserRepository
 import com.example.dicodingstory.data.local.pref.UserPreference
 import com.example.dicodingstory.data.local.pref.dataStore
 
-object Injection {
+object UserInjection {
     fun provideRepository(context: Context): UserRepository {
         val pref = UserPreference.getInstance(context.dataStore)
         return UserRepository.getInstance(pref)
