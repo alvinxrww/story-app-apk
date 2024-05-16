@@ -65,4 +65,10 @@ dependencies {
 
     // image
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // camera
+    val cameraxVersion = "1.2.3"
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
 }

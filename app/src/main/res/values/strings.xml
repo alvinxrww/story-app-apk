@@ -13,9 +13,18 @@
     <string name="name">Nama</string>
     <string name="message_main_page">Selamat Belajar di Dicoding.</string>
     <string name="greeting">Halo %1$s,</string>
-    <string name="logout">Keluar</string>
+    <string name="logout">Logout</string>
     <string name="register_image">image asset for registration page</string>
     <string name="login_image">Image asset for login page</string>
     <string name="create_story">create story button</string>
     <string name="story_image">image of the story</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="camera_x">CameraX</string>
+    <string name="camera">Camera</string>
+    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="description">Description</string>
+    <string name="capture_icon">Capture image icon</string>
+    <string name="switch_icon">Switch camera icon</string>
+    <string name="image_holder">Image holder before uploading</string>
 </resources>

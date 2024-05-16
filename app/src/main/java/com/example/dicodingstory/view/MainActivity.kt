@@ -19,12 +19,11 @@ import com.example.dicodingstory.viewmodel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var storyViewModel: StoryViewModel
+    private var sessionToken: String? = null
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
-    private lateinit var storyViewModel: StoryViewModel
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {
+                sessionToken = user.token
                 storyViewModel = StoryViewModel()
                 storyViewModel.getStories(user.token)
                 storyViewModel.stories.observe(this) { story ->
@@ -69,6 +69,11 @@ class MainActivity : AppCompatActivity() {
         binding.rvStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvStory.addItemDecoration(itemDecoration)
+
+        binding.postStoryButton.setOnClickListener {
+            val postStoryIntent = Intent(this@MainActivity, PostStoryActivity::class.java)
+            startActivity(postStoryIntent)
+        }
     }
 
     private fun setStoryData(stories: List<ListStoryItem>) {

@@ -21,7 +21,7 @@ class StoryViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    fun getStories(token: String) {
+    fun getStories(token: String?) {
         viewModelScope.launch {
             _isLoading.value = true
 
