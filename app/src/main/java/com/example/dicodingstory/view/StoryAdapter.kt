@@ -24,7 +24,6 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIF
 
         Glide.with(holder.itemView.context)
             .load(photo)
-            .circleCrop()
             .into(holder.binding.imgItemPhoto)
         holder.binding.tvItemName.text = name
         holder.binding.tvItemDescription.text = description
