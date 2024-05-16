@@ -2,26 +2,20 @@ package com.example.dicodingstory.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingstory.R
-import com.example.dicodingstory.data.remote.api.ApiConfig
 import com.example.dicodingstory.data.remote.response.ListStoryItem
-import com.example.dicodingstory.data.remote.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivityMainBinding
 import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.viewmodel.StoryViewModel
 import com.example.dicodingstory.viewmodel.ViewModelFactory
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
+    private lateinit var storyViewModel: StoryViewModel
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -55,7 +51,17 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {
-                setupAction(user.token)
+                storyViewModel = StoryViewModel()
+                storyViewModel.getStories(user.token)
+                storyViewModel.stories.observe(this) { story ->
+                    setStoryData(story)
+                }
+                storyViewModel.isLoading.observe(this) {
+                    showLoading(it)
+                }
+                storyViewModel.errorMessage.observe(this) { errorMsg ->
+                    showAlertDialog(errorMsg)
+                }
             }
         }
 
@@ -63,28 +69,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvStory.addItemDecoration(itemDecoration)
-    }
-
-    private fun setupAction(token: String) {
-        binding.progressBar.visibility = View.VISIBLE
-
-        lifecycleScope.launch {
-            try {
-                val apiService = ApiConfig.getApiService(token)
-                val response = apiService.getStories()
-
-                binding.progressBar.visibility = View.GONE
-                Log.d("STORY DATA", "${response.listStory}")
-                setStoryData(response.listStory)
-            } catch (e: HttpException) {
-                binding.progressBar.visibility = View.GONE
-
-                val jsonInString = e.response()?.errorBody()?.string()
-                val errorBody = Gson().fromJson(jsonInString, RegisterResponse::class.java)
-                val errorMessage = errorBody.message
-                showAlertDialog(message = errorMessage.toString())
-            }
-        }
     }
 
     private fun setStoryData(stories: List<ListStoryItem>) {
@@ -102,5 +86,9 @@ class MainActivity : AppCompatActivity() {
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

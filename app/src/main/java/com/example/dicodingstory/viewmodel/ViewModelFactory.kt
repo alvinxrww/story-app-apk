@@ -20,8 +20,6 @@ class ViewModelFactory(private val repository: UserRepository) :
                 LoginViewModel(repository) as T
             }
 
-            // TODO: tambahin StoryViewModel
-
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
