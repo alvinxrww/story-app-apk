@@ -27,6 +27,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:transitionName="name"
+        app:layout_constraintEnd_toEndOf="@+id/storyImageView"
         app:layout_constraintStart_toStartOf="@+id/storyImageView"
         app:layout_constraintTop_toBottomOf="@+id/storyImageView"
         tools:text="uploader's name" />
