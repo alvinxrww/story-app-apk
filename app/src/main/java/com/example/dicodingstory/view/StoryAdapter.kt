@@ -1,8 +1,8 @@
 package com.example.dicodingstory.view
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,15 +29,16 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIF
         holder.binding.tvItemDescription.text = description
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(
+            val detailIntent = Intent(
                 holder.itemView.context,
-                "You chose $name",
-                Toast.LENGTH_SHORT
-            ).show()
+                DetailActivity::class.java
+            ).apply {
+                putExtra(DetailActivity.PHOTO, photo)
+                putExtra(DetailActivity.NAME, name)
+                putExtra(DetailActivity.DESCRIPTION, description)
+            }
 
-//            val detailIntent = Intent(holder.itemView.context, DetailsActivity::class.java)
-//            detailIntent.putExtra(DetailsActivity.USERNAME, username)
-//            holder.itemView.context.startActivity(detailIntent)
+            holder.itemView.context.startActivity(detailIntent)
         }
     }
 
@@ -49,7 +50,10 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIF
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem == newItem
             }
         }
