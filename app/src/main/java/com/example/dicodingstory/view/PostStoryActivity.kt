@@ -16,33 +16,27 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstory.R
-import com.example.dicodingstory.data.remote.api.ApiConfig
-import com.example.dicodingstory.data.remote.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivityPostStoryBinding
 import com.example.dicodingstory.getImageUri
 import com.example.dicodingstory.reduceFileImage
 import com.example.dicodingstory.uriToFile
 import com.example.dicodingstory.view.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.viewmodel.StoryViewModel
 import com.example.dicodingstory.viewmodel.ViewModelFactory
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.HttpException
 
 class PostStoryActivity : AppCompatActivity() {
+    private lateinit var storyViewModel: StoryViewModel
+    private lateinit var binding: ActivityPostStoryBinding
+    private var currentImageUri: Uri? = null
     private val mainViewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
-
-    private lateinit var binding: ActivityPostStoryBinding
-
-    private var currentImageUri: Uri? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -165,19 +159,17 @@ class PostStoryActivity : AppCompatActivity() {
                 requestImageFile
             )
 
-            lifecycleScope.launch {
-                try {
-                    val apiService = ApiConfig.getApiService(token)
-                    val successResponse = apiService.uploadImage(multipartBody, requestBody)
-                    showToast(successResponse.message)
-                    showLoading(false)
-                    finish()
-                } catch (e: HttpException) {
-                    val errorBody = e.response()?.errorBody()?.string()
-                    val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
-                    showToast(errorResponse.message ?: "Network error")
-                    showLoading(false)
-                }
+            storyViewModel = StoryViewModel()
+            storyViewModel.postStory(token, multipartBody, requestBody)
+            storyViewModel.isLoading.observe(this) {
+                showLoading(it)
+            }
+            storyViewModel.errorMessage.observe(this) { errorMsg ->
+                showToast(errorMsg)
+            }
+            storyViewModel.successMessage.observe(this) { successMsg ->
+                showToast(successMsg)
+                finish()
             }
         } ?: showToast(getString(R.string.empty_image_warning))
     }
