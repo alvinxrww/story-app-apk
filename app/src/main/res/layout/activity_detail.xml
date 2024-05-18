@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="@+id/storyImageView"
         app:layout_constraintStart_toStartOf="@+id/storyImageView"
         app:layout_constraintTop_toBottomOf="@+id/storyImageView"
-        tools:text="uploader's name" />
+        tools:text="@string/uploader_name" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
