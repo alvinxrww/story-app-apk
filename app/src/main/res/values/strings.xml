@@ -39,4 +39,6 @@
     <string name="proceed_login">Proceed to login</string>
     <string name="language_setting">Language setting</string>
     <string name="upload_story">Upload Story</string>
+    <string name="permission_granted">Permission request granted</string>
+    <string name="permission_denied">Permission request denied</string>
 </resources>
