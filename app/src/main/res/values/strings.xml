@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">DicodingStory</string>
 
-    <string name="signup">Daftar</string>
-    <string name="login">Masuk</string>
-    <string name="message_welcome_page">Mau berbagi ilmu tentang Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di Dicoding Story aja!</string>
-    <string name="title_welcome_page">Selamat datang di Dicoding Story!</string>
-    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="signup">Signup</string>
+    <string name="login">Login</string>
+    <string name="message_welcome_page">Share your stories and insights on Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and more. Join our community of tech enthusiasts and make your voice heard!</string>
+    <string name="title_welcome_page">Welcome to DicodingStory!</string>
+    <string name="title_signup_page">Register your account here</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="message_login_page">Masukkan dulu datamu ya</string>
-    <string name="title_login_page">Sudah siap untuk berbagi cerita?</string>
-    <string name="name">Nama</string>
-    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
-    <string name="greeting">Halo %1$s,</string>
+    <string name="message_login_page">Please fill in your data here</string>
+    <string name="title_login_page">Ready to share some stories?</string>
+    <string name="name">Name</string>
     <string name="logout">Logout</string>
     <string name="register_image">image asset for registration page</string>
     <string name="login_image">Image asset for login page</string>
@@ -22,9 +20,23 @@
     <string name="upload">Upload</string>
     <string name="camera_x">CameraX</string>
     <string name="camera">Camera</string>
-    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="empty_image_warning">Please input your image first</string>
     <string name="description">Description</string>
     <string name="capture_icon">Capture image icon</string>
     <string name="switch_icon">Switch camera icon</string>
     <string name="image_holder">Image holder before uploading</string>
+    <string name="story_retrieval_error">An error occurred while retrieving stories</string>
+    <string name="camera_display_failure">Failed to display Camera.</string>
+    <string name="image_capture_failure">Failed to capture image</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="successful_log_in">You have logged in successfully</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="token_retrieval_failure">Failed to retrieve token. Please try again.</string>
+    <string name="continue_login">Continue</string>
+    <string name="invalid_password">Password must be at least 8 characters</string>
+    <string name="registration_success">your account has been created successfully</string>
+    <string name="proceed_login">Proceed to login</string>
+    <string name="language_setting">Language setting</string>
+    <string name="upload_story">Upload Story</string>
 </resources>

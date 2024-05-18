@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -57,12 +57,15 @@ class PostStoryActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        supportActionBar?.title = "Post Your Story"
+        supportActionBar?.title = getString(R.string.upload_story)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.language_button -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
             R.id.logout_button -> {
                 mainViewModel.logout()
             }
@@ -105,7 +108,7 @@ class PostStoryActivity : AppCompatActivity() {
             currentImageUri = uri
             showImage()
         } else {
-            Log.d("Photo Picker", "No media selected")
+//            Log.d("Photo Picker", "No media selected")
         }
     }
 
@@ -138,7 +141,6 @@ class PostStoryActivity : AppCompatActivity() {
 
     private fun showImage() {
         currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -146,7 +148,6 @@ class PostStoryActivity : AppCompatActivity() {
     private fun uploadImage(token: String) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
             val description = binding.descEditText.text.toString()
 
             showLoading(true)

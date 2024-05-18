@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DicodingStory</string>
+
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Mau berbagi cerita tentang Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di DicodingStory aja!</string>
+    <string name="title_welcome_page">Selamat datang di DicodingStory!</string>
+    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="message_login_page">Masukkan dulu datamu ya</string>
+    <string name="title_login_page">Sudah siap untuk berbagi cerita?</string>
+    <string name="name">Nama</string>
+    <string name="logout">Keluar</string>
+    <string name="register_image">aset gambar untuk halaman registrasi</string>
+    <string name="login_image">aset gambar untuk halaman login</string>
+    <string name="create_story">tombol untuk menambahkan cerita</string>
+    <string name="story_image">gambar dari ceritanya</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="camera_x">CameraX</string>
+    <string name="camera">Kamera</string>
+    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="description">Deskripsi</string>
+    <string name="capture_icon">Ikon ambil gambar</string>
+    <string name="switch_icon">Ikon ganti kamera</string>
+    <string name="image_holder">Tempat meletakkan gambar sebelum diunggah</string>
+    <string name="story_retrieval_error">An error occurred while retrieving stories</string>
+    <string name="camera_display_failure">Failed to display Camera.</string>
+    <string name="image_capture_failure">Failed to capture image</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="successful_log_in">You have logged in successfully</string>
+    <string name="success">Success</string>
+    <string name="failed">Gagal</string>
+    <string name="token_retrieval_failure">Failed to retrieve token. Please try again.</string>
+    <string name="continue_login">Lanjut</string>
+    <string name="invalid_password">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="registration_success">akun berhasil dibuat</string>
+    <string name="proceed_login">Lanjut masuk</string>
+    <string name="language_setting">Pengaturan bahasa</string>
+    <string name="upload_story">Unggah Cerita</string>
+</resources>

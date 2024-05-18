@@ -2,6 +2,7 @@ package com.example.dicodingstory.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.language_button -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
             R.id.logout_button -> {
                 viewModel.logout()
             }
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     private fun showAlertDialog(message: String) {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.apply {
-            setTitle("An error occurred while retrieving stories")
+            setTitle(getString(R.string.story_retrieval_error))
             setMessage(message)
         }
 

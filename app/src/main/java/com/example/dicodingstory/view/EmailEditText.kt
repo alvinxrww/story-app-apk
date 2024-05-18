@@ -3,6 +3,7 @@ package com.example.dicodingstory.view
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import com.example.dicodingstory.R
 
 class EmailEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -11,7 +12,7 @@ class EmailEditText @JvmOverloads constructor(
         val emailPattern = Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")
 
         if (!s.toString().matches(emailPattern)) {
-            setError("Format email tidak valid", null)
+            setError(context.getString(R.string.invalid_email), null)
         } else {
             error = null
         }

@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.dicodingstory.R
 import com.example.dicodingstory.data.remote.api.ApiConfig
 import com.example.dicodingstory.data.remote.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivitySignupBinding
@@ -58,8 +59,8 @@ class SignupActivity : AppCompatActivity() {
                     apiService.register(name, email, password)
                     binding.progressBar.visibility = View.GONE
                     showAlertDialog(
-                        title = "Success",
-                        message = "your account has been created successfully",
+                        title = getString(R.string.success),
+                        message = getString(R.string.registration_success),
                         success = true
                     )
                 } catch (e: HttpException) {
@@ -69,7 +70,7 @@ class SignupActivity : AppCompatActivity() {
                     val errorBody = Gson().fromJson(jsonInString, RegisterResponse::class.java)
                     val errorMessage = errorBody.message
                     showAlertDialog(
-                        title = "Failed",
+                        title = getString(R.string.failed),
                         message = errorMessage.toString(),
                         success = false
                     )
@@ -125,7 +126,7 @@ class SignupActivity : AppCompatActivity() {
             setTitle(title)
             setMessage(message)
             if (success) {
-                setPositiveButton("Proceed to login") { _, _ ->
+                setPositiveButton(getString(R.string.proceed_login)) { _, _ ->
                     val intent = Intent(this@SignupActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()

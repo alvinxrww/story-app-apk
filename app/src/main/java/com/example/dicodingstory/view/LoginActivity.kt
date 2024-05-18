@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.dicodingstory.R
 import com.example.dicodingstory.data.local.pref.UserModel
 import com.example.dicodingstory.data.remote.api.ApiConfig
 import com.example.dicodingstory.data.remote.response.RegisterResponse
@@ -68,15 +69,15 @@ class LoginActivity : AppCompatActivity() {
 
                     if (token != null) {
                         showAlertDialog(
-                            title = "Success",
-                            message = "You have logged in successfully",
+                            title = getString(R.string.success),
+                            message = getString(R.string.successful_log_in),
                             success = true
                         )
                         viewModel.saveSession(UserModel(email, token))
                     } else {
                         showAlertDialog(
-                            title = "Failed",
-                            message = "Failed to retrieve token. Please try again.",
+                            title = getString(R.string.failed),
+                            message = getString(R.string.token_retrieval_failure),
                             success = false
                         )
                     }
@@ -87,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                     val errorBody = Gson().fromJson(jsonInString, RegisterResponse::class.java)
                     val errorMessage = errorBody.message
                     showAlertDialog(
-                        title = "Failed",
+                        title = getString(R.string.failed),
                         message = errorMessage.toString(),
                         success = false
                     )
@@ -136,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
             setTitle(title)
             setMessage(message)
             if (success) {
-                setPositiveButton("Continue") { _, _ ->
+                setPositiveButton(getString(R.string.continue_login)) { _, _ ->
                     val intent = Intent(context, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)

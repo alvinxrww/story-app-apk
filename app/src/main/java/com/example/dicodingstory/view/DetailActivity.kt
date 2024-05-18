@@ -3,6 +3,7 @@ package com.example.dicodingstory.view
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -30,6 +31,9 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.language_button -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
             R.id.logout_button -> {
                 mainViewModel.logout()
             }
