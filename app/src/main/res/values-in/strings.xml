@@ -42,4 +42,5 @@
     <string name="upload_story">Unggah Cerita</string>
     <string name="permission_granted">Permintaan izin diterima</string>
     <string name="permission_denied">Perimntaan izin ditolak</string>
+    <string name="landing_page_image">Aset gambar untuk halaman landing</string>
 </resources>
