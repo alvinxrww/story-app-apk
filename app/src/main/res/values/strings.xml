@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DicodingStory</string>
 
-    <string name="signup">Signup</string>
+    <string name="signup">Sign Up</string>
     <string name="login">Login</string>
     <string name="message_welcome_page">Share your stories and insights on Android, iOS, Machine Learning, Cloud, Front-End, Back-End, and more. Join our community of tech enthusiasts and make your voice heard!</string>
     <string name="title_welcome_page">Welcome to DicodingStory!</string>
