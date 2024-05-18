@@ -62,12 +62,14 @@ class DetailActivity : AppCompatActivity() {
         val transitionNameName = intent.getStringExtra(TRANSITION_NAME_NAME)
         val transitionNameDescription = intent.getStringExtra(TRANSITION_NAME_DESCRIPTION)
 
-        binding.storyImageView.transitionName = transitionNameImage
-        binding.nameTextView.transitionName = transitionNameName
-        binding.descTextView.transitionName = transitionNameDescription
+        binding.apply {
+            storyImageView.transitionName = transitionNameImage
+            nameTextView.transitionName = transitionNameName
+            descTextView.transitionName = transitionNameDescription
 
-        binding.nameTextView.text = name
-        binding.descTextView.text = description
+            nameTextView.text = name
+            descTextView.text = description
+        }
 
         Glide.with(this)
             .load(photoUrl)
