@@ -26,13 +26,13 @@
     <string name="switch_icon">Switch camera icon</string>
     <string name="image_holder">Image holder before uploading</string>
     <string name="story_retrieval_error">An error occurred while retrieving stories</string>
-    <string name="camera_display_failure">Failed to display Camera.</string>
+    <string name="camera_display_failure">Failed to display Camera</string>
     <string name="image_capture_failure">Failed to capture image</string>
     <string name="invalid_email">Invalid email format</string>
     <string name="successful_log_in">You have logged in successfully</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
-    <string name="token_retrieval_failure">Failed to retrieve token. Please try again.</string>
+    <string name="token_retrieval_failure">Failed to retrieve token. Please try again</string>
     <string name="continue_login">Continue</string>
     <string name="invalid_password">Password must be at least 8 characters</string>
     <string name="registration_success">your account has been created successfully</string>

@@ -33,7 +33,7 @@
     <string name="successful_log_in">Berhasil login</string>
     <string name="success">Berhasil</string>
     <string name="failed">Gagal</string>
-    <string name="token_retrieval_failure">Gagal mendapatkan token. Coba lagi</string>
+    <string name="token_retrieval_failure">Gagal mendapatkan token. Silakan oba lagi</string>
     <string name="continue_login">Lanjut</string>
     <string name="invalid_password">Password tidak boleh kurang dari 8 karakter</string>
     <string name="registration_success">akun berhasil dibuat</string>
@@ -41,7 +41,7 @@
     <string name="language_setting">Pengaturan bahasa</string>
     <string name="upload_story">Unggah Cerita</string>
     <string name="permission_granted">Permintaan izin diterima</string>
-    <string name="permission_denied">Perimntaan izin ditolak</string>
+    <string name="permission_denied">Permintaan izin ditolak</string>
     <string name="landing_page_image">Aset gambar untuk halaman landing</string>
     <string name="uploader_name">Nama pengunggah</string>
 </resources>
