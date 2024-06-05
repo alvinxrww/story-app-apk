@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityPostStoryBinding
-import com.example.dicodingstory.getImageUri
-import com.example.dicodingstory.reduceFileImage
-import com.example.dicodingstory.uriToFile
+import com.example.dicodingstory.utils.getImageUri
+import com.example.dicodingstory.utils.reduceFileImage
+import com.example.dicodingstory.utils.uriToFile
 import com.example.dicodingstory.view.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.dicodingstory.viewmodel.MainViewModel
 import com.example.dicodingstory.viewmodel.StoryViewModel

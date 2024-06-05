@@ -17,8 +17,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.dicodingstory.R
-import com.example.dicodingstory.createCustomTempFile
 import com.example.dicodingstory.databinding.ActivityCameraBinding
+import com.example.dicodingstory.utils.createCustomTempFile
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
