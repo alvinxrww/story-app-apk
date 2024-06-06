@@ -43,6 +43,6 @@
     <string name="permission_denied">Permission request denied</string>
     <string name="landing_page_image">Image asset for landing page</string>
     <string name="uploader_name">Name of the uploder</string>
-    <string name="title_activity_maps">Stories Around Indonesia</string>
+    <string name="title_activity_maps">Stories Around the World</string>
     <string name="maps">Maps</string>
 </resources>

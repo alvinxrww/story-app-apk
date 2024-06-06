@@ -21,7 +21,6 @@ import com.example.dicodingstory.viewmodel.ViewModelFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var storyViewModel: StoryViewModel
-    private var sessionToken: String? = null
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {
-                sessionToken = user.token
                 storyViewModel = StoryViewModel()
                 storyViewModel.getStories(user.token)
                 storyViewModel.stories.observe(this) { story ->

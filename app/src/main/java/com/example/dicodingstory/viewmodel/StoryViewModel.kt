@@ -18,6 +18,9 @@ class StoryViewModel : ViewModel() {
     private val _stories = MutableLiveData<List<ListStoryItem>>()
     val stories: LiveData<List<ListStoryItem>> = _stories
 
+    private val _storiesLocations = MutableLiveData<List<ListStoryItem>>()
+    val storiesLocations: LiveData<List<ListStoryItem>> = _storiesLocations
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -35,6 +38,27 @@ class StoryViewModel : ViewModel() {
                 val apiService = ApiConfig.getApiService(token)
                 val response = apiService.getStories()
                 _stories.value = response.listStory
+
+                _isLoading.value = false
+            } catch (e: HttpException) {
+                _isLoading.value = false
+
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, StoryResponse::class.java)
+                val errorMessage = errorBody.message
+                _errorMessage.value = errorMessage.toString()
+            }
+        }
+    }
+
+    fun getStoriesWithLocation(token: String?) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            try {
+                val apiService = ApiConfig.getApiService(token)
+                val response = apiService.getStories("1")
+                _storiesLocations.value = response.listStory
 
                 _isLoading.value = false
             } catch (e: HttpException) {

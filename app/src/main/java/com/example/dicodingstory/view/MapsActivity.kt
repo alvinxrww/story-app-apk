@@ -1,27 +1,80 @@
 package com.example.dicodingstory.view
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.R
-
+import com.example.dicodingstory.databinding.ActivityMapsBinding
+import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.viewmodel.StoryViewModel
+import com.example.dicodingstory.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.dicodingstory.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val boundsBuilder = LatLngBounds.Builder()
+
+    private lateinit var storyViewModel: StoryViewModel
+    private val mainViewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mainViewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            } else {
+                storyViewModel = StoryViewModel()
+                storyViewModel.getStoriesWithLocation(user.token)
+                storyViewModel.storiesLocations.observe(this) { stories ->
+                    for (story in stories) {
+                        if (story.lat == null || story.lon == null) {
+                            continue
+                        }
+                        val storyLocation = LatLng(story.lat, story.lon)
+                        mMap.addMarker(
+                            MarkerOptions()
+                                .position(storyLocation)
+                                .title(story.name)
+                                .snippet(story.description)
+                        )
+                        boundsBuilder.include(storyLocation)
+                    }
+
+                    val bounds: LatLngBounds = boundsBuilder.build()
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngBounds(
+                            bounds,
+                            resources.displayMetrics.widthPixels,
+                            resources.displayMetrics.heightPixels,
+                            300
+                        )
+                    )
+                }
+                storyViewModel.isLoading.observe(this) {
+                    showLoading(it)
+                }
+                storyViewModel.errorMessage.observe(this) { errorMsg ->
+                    showAlertDialog(errorMsg)
+                }
+            }
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -31,10 +84,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+    }
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showAlertDialog(message: String) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle(getString(R.string.story_retrieval_error))
+            setMessage(message)
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 }
