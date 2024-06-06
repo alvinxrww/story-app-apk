@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
             R.id.logout_button -> {
                 viewModel.logout()
             }
+            R.id.map_button -> {
+                val mapsIntent = Intent(this@MainActivity, MapsActivity::class.java)
+                startActivity(mapsIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
