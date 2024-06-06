@@ -57,7 +57,7 @@ class StoryViewModel : ViewModel() {
 
             try {
                 val apiService = ApiConfig.getApiService(token)
-                val response = apiService.getStories("1")
+                val response = apiService.getStoriesWithLocation()
                 _storiesLocations.value = response.listStory
 
                 _isLoading.value = false

@@ -31,8 +31,11 @@ interface ApiService {
     ): LoginResponse
 
     @GET("stories")
-    suspend fun getStories(
-        @Query("location") location: String = "0"
+    suspend fun getStories(): StoryResponse
+
+    @GET("stories")
+    suspend fun getStoriesWithLocation(
+        @Query("location") location : Int = 1,
     ): StoryResponse
 
     @Multipart
