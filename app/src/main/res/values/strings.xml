@@ -47,4 +47,5 @@
     <string name="maps">Maps</string>
     <string name="retry">Retry</string>
     <string name="include_my_location">Include my location</string>
+    <string name="location_error">Location error</string>
 </resources>

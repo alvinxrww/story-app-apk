@@ -48,4 +48,5 @@
     <string name="maps">Maps</string>
     <string name="retry">Coba lagi</string>
     <string name="include_my_location">Tambahkan lokasi saya</string>
+    <string name="location_error">Gagal mendapatkan lokasi</string>
 </resources>

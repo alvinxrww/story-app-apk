@@ -155,7 +155,6 @@ class PostStoryActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun uploadImage(token: String) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
@@ -163,6 +162,7 @@ class PostStoryActivity : AppCompatActivity() {
             val isIncludeLocation = binding.checkBox.isChecked
             if (isIncludeLocation) {
                 // Get current location
+                @SuppressLint("MissingPermission")
                 if (allPermissionsGranted()) {
                     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                         if (location != null) {
@@ -170,10 +170,10 @@ class PostStoryActivity : AppCompatActivity() {
                             val longitude = location.longitude.toString()
                             uploadToServer(token, imageFile, description, latitude, longitude)
                         } else {
-                            // showToast('location error')
+                             showToast(getString(R.string.location_error))
                         }
                     }.addOnFailureListener {
-                        // showToast('location error')
+                         showToast("Location error")
                     }
                 } else {
                     requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
