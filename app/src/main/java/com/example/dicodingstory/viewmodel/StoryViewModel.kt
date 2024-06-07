@@ -52,14 +52,16 @@ class StoryViewModel : ViewModel() {
     fun postStory(
         token: String?,
         multipartBody: Part,
-        requestBody: RequestBody
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
     ) {
         _isLoading.value = true
 
         viewModelScope.launch {
             try {
                 val apiService = ApiConfig.getApiService(token)
-                val successResponse = apiService.uploadImage(multipartBody, requestBody)
+                val successResponse = apiService.uploadImage(multipartBody, description, lat, lon)
                 _successMessage.value = successResponse.message
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
