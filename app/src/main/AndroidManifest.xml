@@ -24,6 +24,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+        <uses-library
+            android:name="android.test.mock"
+            android:required="false" />
+
         <activity
             android:name=".view.MapsActivity"
             android:exported="false"
