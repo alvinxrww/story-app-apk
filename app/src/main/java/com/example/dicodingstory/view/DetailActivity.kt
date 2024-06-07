@@ -34,8 +34,14 @@ class DetailActivity : AppCompatActivity() {
             R.id.language_button -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
+
             R.id.logout_button -> {
                 authViewModel.logout()
+            }
+
+            R.id.map_button -> {
+                val mapsIntent = Intent(this@DetailActivity, MapsActivity::class.java)
+                startActivity(mapsIntent)
             }
         }
         return super.onOptionsItemSelected(item)
