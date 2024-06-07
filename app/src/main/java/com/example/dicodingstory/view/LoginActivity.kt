@@ -13,11 +13,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstory.R
-import com.example.dicodingstory.data.local.pref.UserModel
-import com.example.dicodingstory.data.remote.api.ApiConfig
-import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.data.user.pref.UserModel
+import com.example.dicodingstory.data.story.api.ApiConfig
+import com.example.dicodingstory.data.story.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivityLoginBinding
-import com.example.dicodingstory.viewmodel.ViewModelFactory
+import com.example.dicodingstory.viewmodel.AuthViewModelFactory
 import com.example.dicodingstory.viewmodel.LoginViewModel
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
-        ViewModelFactory.getInstance(this)
+        AuthViewModelFactory.getInstance(this)
     }
     private lateinit var binding: ActivityLoginBinding
 

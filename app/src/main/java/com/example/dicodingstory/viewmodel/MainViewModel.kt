@@ -1,22 +1,29 @@
 package com.example.dicodingstory.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.local.UserRepository
-import com.example.dicodingstory.data.local.pref.UserModel
-import kotlinx.coroutines.launch
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.dicodingstory.data.story.paging.StoryRepository
+import com.example.dicodingstory.data.story.response.ListStoryItem
+import com.example.dicodingstory.di.StoryInjection
 
-class MainViewModel(private val repository: UserRepository) : ViewModel() {
-    fun getSession(): LiveData<UserModel> {
-        return repository.getSession().asLiveData()
-    }
+class MainViewModel(storyRepository: StoryRepository) : ViewModel() {
 
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
+    val story: LiveData<PagingData<ListStoryItem>> =
+         storyRepository.getStory().cachedIn(viewModelScope)
+
+}
+
+class ViewModelFactory(private val context: Context, val token: String) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(StoryInjection.provideRepository(context, token)) as T
         }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

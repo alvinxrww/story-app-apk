@@ -46,4 +46,5 @@
     <string name="uploader_name">Nama pengunggah</string>
     <string name="title_activity_maps">Story di Seluruh Dunia</string>
     <string name="maps">Maps</string>
+    <string name="retry">Coba lagi</string>
 </resources>

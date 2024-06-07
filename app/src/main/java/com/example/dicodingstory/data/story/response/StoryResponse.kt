@@ -1,5 +1,7 @@
-package com.example.dicodingstory.data.remote.response
+package com.example.dicodingstory.data.story.response
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class StoryResponse(
@@ -14,13 +16,12 @@ data class StoryResponse(
 	val message: String? = null
 )
 
+@Entity(tableName = "story")
 data class ListStoryItem(
 
-	@field:SerializedName("photoUrl")
-	val photoUrl: String? = null,
-
-	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
+	@PrimaryKey
+	@field:SerializedName("id")
+	val id: String,
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -28,12 +29,15 @@ data class ListStoryItem(
 	@field:SerializedName("description")
 	val description: String? = null,
 
-	@field:SerializedName("lon")
-	val lon: Double? = null,
+	@field:SerializedName("photoUrl")
+	val photoUrl: String? = null,
 
-	@field:SerializedName("id")
-	val id: String? = null,
+	@field:SerializedName("createdAt")
+	val createdAt: String? = null,
 
 	@field:SerializedName("lat")
-	val lat: Double? = null
+	val lat: Double? = null,
+
+	@field:SerializedName("lon")
+	val lon: Double? = null
 )

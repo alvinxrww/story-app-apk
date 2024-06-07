@@ -12,8 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstory.R
-import com.example.dicodingstory.data.remote.api.ApiConfig
-import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.data.story.api.ApiConfig
+import com.example.dicodingstory.data.story.response.RegisterResponse
 import com.example.dicodingstory.databinding.ActivitySignupBinding
 import com.google.gson.Gson
 import kotlinx.coroutines.launch

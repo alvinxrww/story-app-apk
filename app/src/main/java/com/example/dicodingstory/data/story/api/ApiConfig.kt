@@ -1,4 +1,4 @@
-package com.example.dicodingstory.data.remote.api
+package com.example.dicodingstory.data.story.api
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
