@@ -1,10 +1,10 @@
-package com.example.dicodingstory.data.remote.database
+package com.example.dicodingstory.data.story.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.dicodingstory.data.remote.response.ListStoryItem
+import com.example.dicodingstory.data.story.response.ListStoryItem
 
 @Database(
     entities = [ListStoryItem::class],

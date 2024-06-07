@@ -3,7 +3,7 @@ package com.example.dicodingstory.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.dicodingstory.data.local.UserRepository
+import com.example.dicodingstory.data.user.UserRepository
 import com.example.dicodingstory.di.UserInjection
 
 class AuthViewModelFactory(private val repository: UserRepository) :

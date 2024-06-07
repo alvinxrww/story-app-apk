@@ -1,4 +1,4 @@
-package com.example.dicodingstory.data.local.pref
+package com.example.dicodingstory.data.user.pref
 
 import android.content.Context
 import androidx.datastore.core.DataStore

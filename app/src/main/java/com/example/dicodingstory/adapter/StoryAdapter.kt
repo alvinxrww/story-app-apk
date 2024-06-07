@@ -8,7 +8,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dicodingstory.data.remote.response.ListStoryItem
+import com.example.dicodingstory.data.story.response.ListStoryItem
 import com.example.dicodingstory.databinding.StoryItemBinding
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter

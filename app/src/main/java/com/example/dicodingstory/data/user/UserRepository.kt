@@ -1,7 +1,7 @@
-package com.example.dicodingstory.data.local
+package com.example.dicodingstory.data.user
 
-import com.example.dicodingstory.data.local.pref.UserModel
-import com.example.dicodingstory.data.local.pref.UserPreference
+import com.example.dicodingstory.data.user.pref.UserModel
+import com.example.dicodingstory.data.user.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(

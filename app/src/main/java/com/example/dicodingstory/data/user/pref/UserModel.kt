@@ -1,4 +1,4 @@
-package com.example.dicodingstory.data.local.pref
+package com.example.dicodingstory.data.user.pref
 
 data class UserModel(
     val email: String,

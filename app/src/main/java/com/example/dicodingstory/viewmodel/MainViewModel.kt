@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.dicodingstory.data.remote.paging.StoryRepository
-import com.example.dicodingstory.data.remote.response.ListStoryItem
+import com.example.dicodingstory.data.story.paging.StoryRepository
+import com.example.dicodingstory.data.story.response.ListStoryItem
 import com.example.dicodingstory.di.Injection
 
 class MainViewModel(storyRepository: StoryRepository) : ViewModel() {

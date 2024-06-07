@@ -1,9 +1,9 @@
-package com.example.dicodingstory.data.remote.api
+package com.example.dicodingstory.data.story.api
 
-import com.example.dicodingstory.data.remote.response.FileUploadResponse
-import com.example.dicodingstory.data.remote.response.LoginResponse
-import com.example.dicodingstory.data.remote.response.RegisterResponse
-import com.example.dicodingstory.data.remote.response.StoryResponse
+import com.example.dicodingstory.data.story.response.FileUploadResponse
+import com.example.dicodingstory.data.story.response.LoginResponse
+import com.example.dicodingstory.data.story.response.RegisterResponse
+import com.example.dicodingstory.data.story.response.StoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field

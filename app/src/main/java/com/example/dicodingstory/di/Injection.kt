@@ -1,9 +1,9 @@
 package com.example.dicodingstory.di
 
 import android.content.Context
-import com.example.dicodingstory.data.remote.api.ApiConfig
-import com.example.dicodingstory.data.remote.database.StoryDatabase
-import com.example.dicodingstory.data.remote.paging.StoryRepository
+import com.example.dicodingstory.data.story.api.ApiConfig
+import com.example.dicodingstory.data.story.database.StoryDatabase
+import com.example.dicodingstory.data.story.paging.StoryRepository
 
 object Injection {
     fun provideRepository(context: Context, token: String): StoryRepository {

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.api.ApiConfig
-import com.example.dicodingstory.data.remote.response.ListStoryItem
-import com.example.dicodingstory.data.remote.response.RegisterResponse
-import com.example.dicodingstory.data.remote.response.StoryResponse
+import com.example.dicodingstory.data.story.api.ApiConfig
+import com.example.dicodingstory.data.story.response.ListStoryItem
+import com.example.dicodingstory.data.story.response.RegisterResponse
+import com.example.dicodingstory.data.story.response.StoryResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody.Part

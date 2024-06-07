@@ -1,9 +1,9 @@
-package com.example.dicodingstory.data.remote.paging
+package com.example.dicodingstory.data.story.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.dicodingstory.data.remote.api.ApiService
-import com.example.dicodingstory.data.remote.response.ListStoryItem
+import com.example.dicodingstory.data.story.api.ApiService
+import com.example.dicodingstory.data.story.response.ListStoryItem
 
 class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
 
