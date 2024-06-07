@@ -64,7 +64,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.postStoryButton.setOnClickListener {
             val postStoryIntent = Intent(this@MainActivity, PostStoryActivity::class.java)
-            startActivity(postStoryIntent)
+            @Suppress("DEPRECATION")
+            startActivityForResult(postStoryIntent, REQUEST_CODE_POST_STORY)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_POST_STORY && resultCode == RESULT_OK) {
+            finish()
+            startActivity(intent)
         }
     }
 
@@ -80,6 +90,11 @@ class MainActivity : AppCompatActivity() {
         }
         mainViewModel.story.observe(this) {
             adapter.submitData(lifecycle, it)
+            binding.rvStory.scrollToPosition(0)
         }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_POST_STORY = 1
     }
 }

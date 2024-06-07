@@ -220,6 +220,7 @@ class PostStoryActivity : AppCompatActivity() {
         }
         storyViewModel.successMessage.observe(this) { successMsg ->
             showToast(successMsg)
+            setResult(RESULT_OK)
             finish()
         }
     }
