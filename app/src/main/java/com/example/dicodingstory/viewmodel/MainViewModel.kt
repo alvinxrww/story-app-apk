@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.dicodingstory.data.story.paging.StoryRepository
 import com.example.dicodingstory.data.story.response.ListStoryItem
-import com.example.dicodingstory.di.Injection
+import com.example.dicodingstory.di.StoryInjection
 
 class MainViewModel(storyRepository: StoryRepository) : ViewModel() {
 
@@ -22,7 +22,7 @@ class ViewModelFactory(private val context: Context, val token: String) : ViewMo
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainViewModel(Injection.provideRepository(context, token)) as T
+            return MainViewModel(StoryInjection.provideRepository(context, token)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

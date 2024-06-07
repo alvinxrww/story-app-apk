@@ -5,7 +5,7 @@ import com.example.dicodingstory.data.story.api.ApiConfig
 import com.example.dicodingstory.data.story.database.StoryDatabase
 import com.example.dicodingstory.data.story.paging.StoryRepository
 
-object Injection {
+object StoryInjection {
     fun provideRepository(context: Context, token: String): StoryRepository {
         val database = StoryDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService(token)
