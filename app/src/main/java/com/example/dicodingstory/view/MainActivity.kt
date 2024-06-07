@@ -3,13 +3,13 @@ package com.example.dicodingstory.view
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingstory.R
+import com.example.dicodingstory.adapter.LoadingStateAdapter
 import com.example.dicodingstory.adapter.StoryAdapter
 import com.example.dicodingstory.databinding.ActivityMainBinding
 import com.example.dicodingstory.viewmodel.AuthViewModel
@@ -70,12 +70,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData(token: String) {
         val adapter = StoryAdapter()
-        binding.rvStory.adapter = adapter
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
         val mainViewModel: MainViewModel by viewModels {
             ViewModelFactory(this, token)
         }
         mainViewModel.story.observe(this) {
-            Log.d("DATA", "$it")
             adapter.submitData(lifecycle, it)
         }
     }
