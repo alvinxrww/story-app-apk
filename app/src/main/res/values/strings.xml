@@ -45,4 +45,5 @@
     <string name="uploader_name">Name of the uploder</string>
     <string name="title_activity_maps">Stories Around the World</string>
     <string name="maps">Maps</string>
+    <string name="retry">Retry</string>
 </resources>

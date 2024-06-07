@@ -22,9 +22,9 @@ import com.example.dicodingstory.utils.getImageUri
 import com.example.dicodingstory.utils.reduceFileImage
 import com.example.dicodingstory.utils.uriToFile
 import com.example.dicodingstory.view.CameraActivity.Companion.CAMERAX_RESULT
-import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.viewmodel.AuthViewModel
 import com.example.dicodingstory.viewmodel.StoryViewModel
-import com.example.dicodingstory.viewmodel.ViewModelFactory
+import com.example.dicodingstory.viewmodel.AuthViewModelFactory
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -34,8 +34,8 @@ class PostStoryActivity : AppCompatActivity() {
     private lateinit var storyViewModel: StoryViewModel
     private lateinit var binding: ActivityPostStoryBinding
     private var currentImageUri: Uri? = null
-    private val mainViewModel by viewModels<MainViewModel> {
-        ViewModelFactory.getInstance(this)
+    private val authViewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory.getInstance(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,7 +50,7 @@ class PostStoryActivity : AppCompatActivity() {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
             R.id.logout_button -> {
-                mainViewModel.logout()
+                authViewModel.logout()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -82,7 +82,7 @@ class PostStoryActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
 
-        mainViewModel.getSession().observe(this) { user ->
+        authViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()

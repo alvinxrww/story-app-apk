@@ -1,4 +1,4 @@
-package com.example.dicodingstory.view
+package com.example.dicodingstory.adapter
 
 import android.app.Activity
 import android.content.Intent
@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingstory.data.remote.response.ListStoryItem
 import com.example.dicodingstory.databinding.StoryItemBinding
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
+import com.example.dicodingstory.view.DetailActivity
 
-class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = StoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
@@ -21,9 +22,9 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIF
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val storyItem = getItem(position)
-        val photo = storyItem.photoUrl
-        val name = storyItem.name
-        val description = storyItem.description
+        val photo = storyItem?.photoUrl
+        val name = storyItem?.name
+        val description = storyItem?.description
 
         Glide.with(holder.itemView.context)
             .load(photo)
@@ -31,9 +32,9 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ListViewHolder>(DIF
         holder.binding.tvItemName.text = name
         holder.binding.tvItemDescription.text = description
 
-        holder.binding.imgItemPhoto.transitionName = "sharedImage_${storyItem.id}"
-        holder.binding.tvItemName.transitionName = "sharedName_${storyItem.id}"
-        holder.binding.tvItemDescription.transitionName = "sharedDescription_${storyItem.id}"
+        holder.binding.imgItemPhoto.transitionName = "sharedImage_${storyItem?.id}"
+        holder.binding.tvItemName.transitionName = "sharedName_${storyItem?.id}"
+        holder.binding.tvItemDescription.transitionName = "sharedDescription_${storyItem?.id}"
 
         holder.itemView.setOnClickListener {
             val detailIntent = Intent(

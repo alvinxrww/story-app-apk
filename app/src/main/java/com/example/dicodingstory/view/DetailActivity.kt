@@ -15,13 +15,13 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityDetailBinding
-import com.example.dicodingstory.viewmodel.MainViewModel
-import com.example.dicodingstory.viewmodel.ViewModelFactory
+import com.example.dicodingstory.viewmodel.AuthViewModel
+import com.example.dicodingstory.viewmodel.AuthViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private val mainViewModel by viewModels<MainViewModel> {
-        ViewModelFactory.getInstance(this)
+    private val authViewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory.getInstance(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
             R.id.logout_button -> {
-                mainViewModel.logout()
+                authViewModel.logout()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -46,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel.getSession().observe(this) { user ->
+        authViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()

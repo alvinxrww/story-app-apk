@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -77,4 +78,11 @@ dependencies {
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
+
+    // paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+
+    // db
+    implementation("androidx.room:room-ktx:2.4.0-rc01")
+    ksp("androidx.room:room-compiler:2.4.0-rc01")
 }

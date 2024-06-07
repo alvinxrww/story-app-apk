@@ -8,9 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityMapsBinding
-import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.viewmodel.AuthViewModel
 import com.example.dicodingstory.viewmodel.StoryViewModel
-import com.example.dicodingstory.viewmodel.ViewModelFactory
+import com.example.dicodingstory.viewmodel.AuthViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,8 +26,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val boundsBuilder = LatLngBounds.Builder()
 
     private lateinit var storyViewModel: StoryViewModel
-    private val mainViewModel by viewModels<MainViewModel> {
-        ViewModelFactory.getInstance(this)
+    private val authViewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory.getInstance(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel.getSession().observe(this) { user ->
+        authViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
