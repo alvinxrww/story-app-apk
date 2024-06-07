@@ -46,4 +46,5 @@
     <string name="title_activity_maps">Stories Around the World</string>
     <string name="maps">Maps</string>
     <string name="retry">Retry</string>
+    <string name="include_my_location">Include my location</string>
 </resources>

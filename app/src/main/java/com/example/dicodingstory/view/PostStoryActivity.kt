@@ -1,6 +1,7 @@
 package com.example.dicodingstory.view
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -25,12 +26,16 @@ import com.example.dicodingstory.view.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.dicodingstory.viewmodel.AuthViewModel
 import com.example.dicodingstory.viewmodel.StoryViewModel
 import com.example.dicodingstory.viewmodel.AuthViewModelFactory
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class PostStoryActivity : AppCompatActivity() {
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var storyViewModel: StoryViewModel
     private lateinit var binding: ActivityPostStoryBinding
     private var currentImageUri: Uri? = null
@@ -58,20 +63,24 @@ class PostStoryActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_LONG).show()
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.CAMERA, false) &&
+                        permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // All permissions granted
+                    Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_LONG).show()
+                }
+                else -> {
+                    // Permission denied
+                    Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_LONG).show()
+                }
             }
         }
 
-    private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(
-            this,
-            REQUIRED_PERMISSION
-        ) == PackageManager.PERMISSION_GRANTED
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,8 +88,10 @@ class PostStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+            requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         authViewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
@@ -144,34 +155,67 @@ class PostStoryActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun uploadImage(token: String) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             val description = binding.descEditText.text.toString()
-
-            showLoading(true)
-
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-            val multipartBody = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
-                requestImageFile
-            )
-
-            storyViewModel = StoryViewModel()
-            storyViewModel.postStory(token, multipartBody, requestBody)
-            storyViewModel.isLoading.observe(this) {
-                showLoading(it)
-            }
-            storyViewModel.errorMessage.observe(this) { errorMsg ->
-                showToast(errorMsg)
-            }
-            storyViewModel.successMessage.observe(this) { successMsg ->
-                showToast(successMsg)
-                finish()
+            val isIncludeLocation = binding.checkBox.isChecked
+            if (isIncludeLocation) {
+                // Get current location
+                if (allPermissionsGranted()) {
+                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                        if (location != null) {
+                            val latitude = location.latitude.toString()
+                            val longitude = location.longitude.toString()
+                            uploadToServer(token, imageFile, description, latitude, longitude)
+                        } else {
+                            // showToast('location error')
+                        }
+                    }.addOnFailureListener {
+                        // showToast('location error')
+                    }
+                } else {
+                    requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
+                }
+            } else {
+                uploadToServer(token, imageFile, description, null, null)
             }
         } ?: showToast(getString(R.string.empty_image_warning))
+    }
+
+    private fun uploadToServer(
+        token: String,
+        imageFile: File,
+        description: String,
+        latitude: String?,
+        longitude: String?
+    ) {
+        showLoading(true)
+
+        val requestBody = description.toRequestBody("text/plain".toMediaType())
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImageFile
+        )
+
+        val latRequestBody = latitude?.toRequestBody("text/plain".toMediaType())
+        val lonRequestBody = longitude?.toRequestBody("text/plain".toMediaType())
+
+        storyViewModel = StoryViewModel()
+        storyViewModel.postStory(token, multipartBody, requestBody, latRequestBody, lonRequestBody)
+        storyViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+        storyViewModel.errorMessage.observe(this) { errorMsg ->
+            showToast(errorMsg)
+        }
+        storyViewModel.successMessage.observe(this) { successMsg ->
+            showToast(successMsg)
+            finish()
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -183,7 +227,10 @@ class PostStoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        private val REQUIRED_PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
-
 }
